@@ -426,8 +426,6 @@ extension Shared: Observable {}
   extension Shared: @unchecked Sendable {}
 #endif
 
-extension Shared: Perceptible {}
-
 extension Shared: CustomDumpRepresentable {
   public var customDumpValue: Any {
     wrappedValue

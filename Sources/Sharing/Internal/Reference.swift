@@ -11,7 +11,7 @@ protocol Reference<Value>:
   AnyObject,
   CustomStringConvertible,
   Sendable,
-  Perceptible
+  Observable
 {
   associatedtype Value
 
@@ -40,8 +40,8 @@ protocol MutableReference<Value>: Reference, Equatable {
   func save() async throws
 }
 
-final class _BoxReference<Value>: MutableReference, Observable, Perceptible, @unchecked Sendable {
-  private let _$perceptionRegistrar = PerceptionRegistrar(isPerceptionCheckingEnabled: false)
+final class _BoxReference<Value>: MutableReference, Observable, @unchecked Sendable {
+  private let _$perceptionRegistrar = ObservationRegistrar()
   private let lock = NSRecursiveLock()
 
   #if canImport(Combine)
@@ -135,11 +135,7 @@ final class _BoxReference<Value>: MutableReference, Observable, Perceptible, @un
   ) {
     _$perceptionRegistrar.access(
       self,
-      keyPath: keyPath,
-      fileID: fileID,
-      filePath: filePath,
-      line: line,
-      column: column
+      keyPath: keyPath
     )
   }
 
@@ -167,9 +163,9 @@ final class _BoxReference<Value>: MutableReference, Observable, Perceptible, @un
 }
 
 final class _PersistentReference<Key: SharedReaderKey>:
-  Reference, Observable, Perceptible, @unchecked Sendable
+  Reference, Observable, @unchecked Sendable
 {
-  private let _$perceptionRegistrar = PerceptionRegistrar(isPerceptionCheckingEnabled: false)
+  private let _$perceptionRegistrar = ObservationRegistrar()
   private let key: Key
   private let lock = NSRecursiveLock()
 
@@ -327,11 +323,7 @@ final class _PersistentReference<Key: SharedReaderKey>:
   ) {
     _$perceptionRegistrar.access(
       self,
-      keyPath: keyPath,
-      fileID: fileID,
-      filePath: filePath,
-      line: line,
-      column: column
+      keyPath: keyPath
     )
   }
 

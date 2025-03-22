@@ -296,8 +296,6 @@ extension SharedReader: Observable {}
   extension SharedReader: @unchecked Sendable {}
 #endif
 
-extension SharedReader: Perceptible {}
-
 extension SharedReader: CustomDumpRepresentable {
   public var customDumpValue: Any {
     wrappedValue

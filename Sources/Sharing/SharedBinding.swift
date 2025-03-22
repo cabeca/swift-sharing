@@ -22,16 +22,7 @@
         //     https://github.com/swiftlang/swift/pull/76705
         let reference = base.reference as? any MutableReference & Observable
       else {
-        #if os(visionOS)
           fatalError("This should be unreachable: visionOS should always support Observation")
-        #else
-          func open(_ reference: some MutableReference<Value>) -> Binding<Value> {
-            @PerceptionCore.Bindable var reference = reference
-            return $reference._wrappedValue
-          }
-          self = open(base.reference)
-          return
-        #endif
       }
       func open<V>(_ reference: some MutableReference<V> & Observable) -> Binding<Value> {
         @SwiftUI.Bindable var reference = reference
