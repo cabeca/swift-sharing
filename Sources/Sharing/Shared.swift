@@ -2,7 +2,6 @@ import CustomDump
 import Dependencies
 import Foundation
 import IdentifiedCollections
-import PerceptionCore
 
 #if canImport(Combine)
   import Combine
